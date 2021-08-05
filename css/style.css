@@ -1,0 +1,266 @@
+/*-- Body Reset --*/
+body {
+  overflow-x: hidden;  /*no scrolling left right*/
+  font-family: 'Montserrat', sans-serif;
+  color: #000000;
+}
+
+/*============= TOP BAR HEADER =============*/
+
+.top-bar {
+  background:#000000;
+  height:fit-content; /*1 rem = 16px*/
+  /*max-height:max-content;*/
+  /*border: 5px solid red;*/
+  /*overflow: hidden;*/
+  /*resize: both;*/
+  
+}
+.top-bar a {
+  color: white;
+  text-decoration: none;/*removes undeline from link*/
+  font-size: 1.5rem;
+  /*text-align: center;
+  align-items: center;*/
+  
+}
+.alignme {
+  display: flex;
+  align-items: center;
+}
+
+
+/*============= NAVIGATION =============*/
+
+.navbar-brand img {
+   height: 3rem;
+}
+.navbar { 
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  box-shadow: 0 .5rem .5rem rgba(0,0,0,0.8);
+  z-index: 1; /*shaddow over carousel*/
+  }
+.nav-item {
+  padding: 0.5rem;
+}
+.nav-link {
+  color: #5b5555!important;
+}
+.nav-link.active,
+.nav-link:hover {
+  color: #4981b3!important;
+}
+
+/*============= CAROUSEL =============*/
+
+#carousel {
+  box-shadow: 0 1rem 1rem rgba(0,0,0,0.1);
+}
+.carousel-inner {
+  max-height: 38rem !important;
+}
+
+/*---Change Carousel Transition Speed --*/
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  transition: transform 1.8s ease;
+}
+
+/*-- Carousel Content --*/
+.carousel-caption {
+  position: absolute;
+  top: 54%;
+  transform: translateY(-50%);
+  text-transform: uppercase;
+  padding: 0;
+}
+.bg-custom {
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  border-radius: 1rem;
+}
+.carousel-caption h1 {
+  font-size:3vw;
+  text-shadow: 0.1vw 0.1vw 0.2vw rgba(0,0,0,1);
+  padding: 0;
+}
+.border-primary {
+  border-top: 0.2rem solid #4981b3 !important;
+}
+.carousel-caption h3 {
+  font-size:2vw;
+  text-shadow: 0.1vw 0.1vw 0.2vw rgba(0,0,0,1);
+  padding: 0;
+}
+.btn-lg {
+  border-radius: 0;
+  text-transform: uppercase;
+  font-size: 1vw;
+  border-width: medium;
+}
+.btn-danger {
+  background-color: #ac2615;
+  border: 0.05rem solid #ac2615;
+}
+.btn-primary {
+  background-color: #4981b3;
+  border: 0.05rem solid #4981b3;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #68a0d2 !important;
+  border: 0.05rem solid #68a0d2 !important;
+}
+.lead {
+  font-size:2vw !important;
+  text-shadow: 0.1vw 0.1vw 0.2vw rgba(0,0,0,1);
+}
+/*===== FIXED BACKGROUND IMG =====*/
+
+.fixed-background {
+  overflow: hidden; /*-- Correction for iOS --*/
+}
+
+.fixed{
+  background-image: url(../img/matrix.jpg);
+  position: fixed;
+}
+
+.fixed-background {
+  padding: 10rem 0;  
+}
+
+/*-- Emoji Navbar --*/
+
+.emoji {
+  background-image: linear-gradient(to right, #4981b3, #ac2615);
+  min-height: 0 !important;
+  padding: 0.4rem 0 !important; 
+}
+.emoji .svg-inline--fa {
+  margin: 0 auto;
+  color: white;
+  font-size: 2rem;
+}
+
+/*============= FOOTER =============*/
+footer {
+  background-color: #383838;
+  padding: 1rem 2rem 3rem;
+}
+footer img {
+  height: 3.5rem;
+  margin: 1.5rem auto;
+}
+footer p, footer a,
+.socket a {
+  color: white;
+  text-decoration: none;
+}
+ul.social{
+  list-style-type: none;
+  display: flex;
+  max-width: 16rem; /*less spaced out*/
+  margin: 0 auto; /*center them*/
+  padding: 0;
+}
+ul.social li {
+  margin: 0 auto;
+}
+footer .svg-inline--fa {
+  font-size: 2.3rem; 
+}
+footer .svg-inline--fa:hover {
+  color: #68a0d2;
+}
+
+/*============= SOCKET =============*/
+
+.socket {
+  background-color: #222222;
+  border-top: 0.1rem solid #4981b3;
+}
+
+/*============= MEDIA QUERIES =============*/
+
+/* Devices under 1199px (xl) */
+/*@media (max-width: 1199.98px) {
+/*  .carousel-caption h1 {
+    /*font-size: 100%;*/
+/*  }
+/*  .carousel-caption h3 {
+   /*font-size: 0.8rem;*/
+/*  }
+/*}
+/* Devices under 992px (lg) */
+/*@media (max-width: 991.98px) {*/
+/*  .carousel-caption h1 {
+   /* font-size: 100%;*/
+/*  }
+/*  .carousel-caption h3 {
+   /* font-size: 0.5rem;*/
+/*  }
+/*  .btn-lg {
+   /* font-size: 0.5rem;*/
+/*  }
+/*}
+
+
+/*============ BOOTSTRAP BREAK POINTS:
+
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+
+=============*/
+
+/*-- Bootstrap Mobile Gutter Fix --*/
+.row, .container-fluid {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+/*-- Fixed Background Image ios --*/
+.fixed-background {
+  position: relative;
+  width: 100%;
+  z-index: 1000!important;
+}
+.fixed-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -999 !important;
+}
+
+.fixed {
+  z-index: -999!important;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+}
+

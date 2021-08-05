@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" name="viewpoint" content="width=device-width, initial-scale=1">
+
+  <title></title>
+</head>
+<!--<div id="app"></div>-->
+
+<style>
+  body {
+    background-color: rgb(102, 102, 102);
+    overflow-x: hidden;
+    font-family: Tahoma;
+    /*Verdana, Geneva, Tahoma, sans-serif*/
+  }
+
+  #prepTime {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 300px;
+    height: 160px;
+    margin: auto;
+    border: 3px solid black;
+    background-color: rgb(255, 255, 0);
+
+  }
+
+  #workTime {
+    position: fixed;
+    top: 220px;
+    left: 30px;
+    width: 300px;
+    height: 160px;
+    margin: auto;
+    border: 3px solid black;
+    background-color: rgb(0, 255, 0);
+  }
+
+  #restTime {
+    position: fixed;
+    top: 410px;
+    left: 30px;
+    width: 300px;
+    height: 160px;
+    margin: auto;
+    border: 3px solid black;
+    background-color: rgb(255, 0, 255);
+  }
+
+  #roundsIn {
+    position: fixed;
+    top: 600px;
+    left: 195px;
+    width: 135px;
+    height: 160px;
+    margin: auto;
+    border: 3px solid black;
+    background-color: orange;
+  }
+
+  #tabatasIn {
+    position: fixed;
+    top: 600px;
+    left: 30px;
+    width: 135px;
+    height: 160px;
+    margin: auto;
+    border: 3px solid black;
+    background-color: orange;
+  }
+
+  #roundsOut {
+    position: fixed;
+    top: 600px;
+    left: 630px;
+    width: 240px;
+    height: 240px;
+    margin: auto;
+    border: 3px solid black;
+    align-items: center;
+    justify-content: center;
+    /*font-size: 38px;*/
+    background-color: rgb(175, 175, 175);
+  }
+
+  #tabatasOut {
+    position: fixed;
+    top: 600px;
+    left: 360px;
+    width: 240px;
+    height: 240px;
+    margin: auto;
+    border: 3px solid black;
+    align-items: center;
+    justify-content: center;
+    /*font-size: 38px;*/
+    background-color: rgb(180, 180, 180);
+
+  }
+
+  .roundsOut {
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-size: 180px;
+  }
+
+  .tabatasOut {
+    color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-size: 180px;
+  }
+
+  .button:hover {
+    background-color: rgb(0, 255, 0)
+  }
+
+  .button:active {
+    background-color: rgb(255, 0, 255);
+    box-shadow: 0 5px #555;
+    transform: translateY(4px);
+  }
+
+  .button {
+    padding: 15px 25px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: rgb(0, 0, 0);
+    background-color: rgb(180, 180, 180);
+    border: 3px solid black;
+    border-radius: 15px;
+    height: 100px;
+    width: 184px;
+    box-shadow: 0 9px rgb(59, 59, 59);
+  }
+
+  #stopTabataButton {
+    position: fixed;
+    top: 600px;
+    left: 900px;
+
+    /*border: 3px solid black;*/
+  }
+
+  #stopStopwatchButton {
+    position: fixed;
+    top: 738px;
+    left: 900px;
+
+    /*border: 3px solid black;*/
+  }
+
+  #startTabataButton {
+    position: fixed;
+    top: 600px;
+    left: 1111px;
+
+    /*border: 3px solid black;*/
+  }
+
+  #startStopwatchButton {
+    position: fixed;
+    top: 738px;
+    left: 1111px;
+
+    /* border: 3px solid black;*/
+  }
+
+  #soundButton {
+    position: fixed;
+    top: 600px;
+    left: 1322px;
+
+
+    /* border: 3px solid black;*/
+  }
+
+  #datum {
+    position: fixed;
+    top: 790px;
+    left: 30px;
+    width: 300px;
+    height: 48px;
+    border: 3px solid black;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    background-color: deepskyblue;
+
+  }
+
+  .base-timer {
+    position: fixed;
+    top: 30px;
+    left: 360px;
+    width: 1140px;
+    height: 540px;
+    border: 3px solid black;
+
+  }
+
+  .base-timer__label {
+    position: fixed;
+    top: 15px;
+    left: 425px;
+    font-size: 255px;
+
+  }
+
+  .base-timer__label2 {
+    position: fixed;
+    top: 260px;
+    left: 425px;
+    font-size: 255px;
+  }
+
+  div {
+    display: inline-block;
+    text-align: center;
+    border-radius: 15px;
+
+
+  }
+
+  div label {
+    display: block;
+    text-align: center;
+  }
+
+  input {
+    /*padding: 15px 25px;*/
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: rgb(0, 0, 0);
+    background-color: inherit;
+    border: solid;
+    border-radius: 15px;
+
+  }
+
+  /*input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{opacity:1;}*/
+</style>
+
+<script>
+  const WARNING_THRESHOLD = 10;
+  const ALERT_THRESHOLD = 5;
+
+  var h = 0;
+  var m = 0;
+  var s = 10;
+  var h2 = 0;
+  var m2 = 0;
+  var s2 = 5;
+  var h3 = 0;
+  var m3 = 0;
+  var s3 = 5;
+  var rounds = 10;
+  var tabatas = 10;
+  var totalTime = null;
+  var prepTime = null;
+  var workTime = null;
+  var restTime = null;
+  var stopwatchTime = null;
+
+  let timePassed = 1;
+  let timeInc = null;
+
+  let preptimerInterval = null;
+  let worktimerInterval = null;
+  let resttimerInterval = null;
+  let stopwatchtimerInterval = null;
+  var audio1 = new Audio("audio1.wav");
+  var audio2 = new Audio("audio2.wav");
+  var audio3 = new Audio("audio3.wav");
+
+  function calcTabataTime() {
+
+    document.getElementById('base-timer-label2').innerHTML = formatTime(timeInc);
+    rounds = +document.getElementById('roundsInText').value;
+    tabatas = +document.getElementById('tabatasInText').value;
+
+    document.getElementsByClassName("roundsOut")[0].innerHTML = +rounds;
+    document.getElementsByClassName("tabatasOut")[0].innerHTML = +tabatas;
+
+    document.getElementById("base-timer-label").style.color = "rgb(255, 255, 255)";
+    document.getElementById("base-timer-label2").style.color = "rgb(255, 255, 255)";
+
+    h = +document.getElementById("prepHH").value * 60 * 60;
+    m = +document.getElementById("prepMM").value * 60;
+    s = +document.getElementById("prepSS").value;
+    prepTime = h + m + s;
+
+    h2 = +document.getElementById("workHH").value * 60 * 60;
+    m2 = +document.getElementById("workMM").value * 60;
+    s2 = +document.getElementById("workSS").value;
+    workTime = h2 + m2 + s2;
+
+    h3 = +document.getElementById("restHH").value * 60 * 60;
+    m3 = +document.getElementById("restMM").value * 60;
+    s3 = +document.getElementById("restSS").value;
+    restTime = h3 + m3 + s3;
+
+    if (workTime === 0 || restTime === 0) {
+      document.getElementById("startTabataButton").style.display = "none";
+    } else document.getElementById("startTabataButton").style.display = "block";
+
+    //if (tabatas == 0){ tabatas = 1; prepTime = 0;} else tabatas = tabatas; 
+    totalTime = (prepTime * tabatas) + rounds * (workTime + restTime) * tabatas;
+    document.getElementById("base-timer-label").innerHTML = formatTime(totalTime);
+  }
+
+  function startTabataButton() {
+    startPrepTimer();
+  }
+
+  function startStopwatchButton() {
+    startStopwatchTimer();
+  }
+
+  function stopTabataButton() {
+    timePassed = 0;
+    clearInterval(preptimerInterval);
+    clearInterval(worktimerInterval);
+    clearInterval(resttimerInterval);
+    document.getElementById("startTabataButton").style.display = "block";
+    calcTabataTime();
+  }
+
+  function stopStopwatchButton() {
+    timeInc = 0;
+    clearInterval(stopwatchtimerInterval);
+    document.getElementById("startStopwatchButton").style.display = "block";
+
+  }
+
+  var pressed = false;
+
+  function soundButton() {
+    if (pressed === false) {
+      pressed = true;
+      document.getElementById("soundOnOff").textContent = "SOUND IS ON";
+      //audio1.play();
+      return
+    }
+    if (pressed === true) {
+      pressed = false;
+      document.getElementById("soundOnOff").textContent = "SOUND IS OFF";
+      //audio2.play();
+    }
+  }
+
+  function startPrepTimer() {
+
+    document.getElementsByClassName("tabatasOut")[0].innerHTML = +tabatas;
+    rounds = +document.getElementById('roundsInText').value;
+    document.getElementsByClassName("roundsOut")[0].innerHTML = +rounds;
+    document.getElementById("startTabataButton").style.display = "none";
+
+    if (prepTime === 0) {
+      tabatas = tabatas - 1;
+      timePassed = 0;
+      clearInterval(preptimerInterval);
+      startWorkTimer();
+      return
+    }
+    preptimerInterval = setInterval(() => {
+
+      document.getElementById("base-timer-label").style.color = "rgb(255, 255, 0)";
+      timeLeft = prepTime - timePassed;
+      document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+      timePassed = timePassed += 1;
+
+
+      if (timeLeft === 1) {
+
+        tabatas = tabatas - 1;
+        timePassed = 0;
+        clearInterval(preptimerInterval);
+        //rounds = +document.getElementById('roundsInText').value;
+        //document.getElementsByClassName("roundsOut")[0].innerHTML = +rounds;
+        //document.getElementsByClassName("tabatasOut")[0].innerHTML = +tabatas;
+        startWorkTimer();
+      }
+    }, 1000);
+
+  }
+
+  function startWorkTimer() {
+
+    worktimerInterval = setInterval(() => {
+      document.getElementById("base-timer-label").style.color = "rgb(0, 255, 0)";
+      timeLeft = workTime - timePassed;
+      document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+      if (timePassed === 0 & pressed === true) {
+        audio2.play();
+      }
+      timePassed = timePassed += 1;
+      document.getElementsByClassName("roundsOut")[0].innerHTML = +rounds;
+
+      if (timeLeft === 1) {
+        timePassed = 0;
+        clearInterval(worktimerInterval);
+        startRestTimer();
+      }
+    }, 1000);
+
+  }
+
+  function startRestTimer() {
+
+    resttimerInterval = setInterval(() => {
+      document.getElementById("base-timer-label").style.color = "rgb(255, 0, 255)";
+      timeLeft = restTime - timePassed;
+      document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+      if (timePassed === 0 & pressed === true) {
+        audio1.play();
+      }
+      timePassed = timePassed += 1;
+
+      if (timeLeft === 1) {
+        timePassed = 0;
+        clearInterval(resttimerInterval);
+        rounds = rounds - 1;
+
+        if (rounds === 0 & tabatas !== 0) {
+          startPrepTimer();
+          return
+        }
+        if (tabatas === 0 & rounds === 0) {
+          stopTabataButton();
+          return
+        }
+
+        //if(pressed === true){audio1.play();}  
+        startWorkTimer();
+      }
+    }, 1000);
+  }
+
+
+  function startStopwatchTimer() {
+    document.getElementById("startStopwatchButton").style.display = "none";
+
+    stopwatchtimerInterval = setInterval(() => {
+      timeInc = timeInc + 1;
+      document.getElementById('base-timer-label2').innerHTML = formatTime(timeInc);
+    }, 1000, );
+  }
+
+  var myVar = setInterval(myTimer, 1000);
+
+  function myTimer() {
+    var d = new Date();
+    document.getElementById("datum").innerHTML = d.toLocaleTimeString();
+  }
+
+  function myStopFunction() {
+    clearInterval(myVar);
+  }
+  // delay setTimeout(() => {  startPrepTimer(); }, 5000);
+
+  function formatTime(time) {
+    var hours = Math.floor(time / 3600);
+    var minutes = Math.floor((time - (hours * 3600)) / 60);
+    var seconds = time - (hours * 3600) - (minutes * 60);
+    if (hours < 10) {
+      hours = `0${hours}`;
+    }
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+    return `${hours}:${minutes}:${seconds}`;
+  }
+</script>
+
+<body>
+
+  <div id="prepTime">
+    <h2>PREP TIME</h2>
+    <div>
+      <label>HOURS</label>
+      <input style="width:80px; font-size:50px;" id="prepHH" type="number" onchange="calcTabataTime()" name="HH" min="0"
+        max="24" value="0">
+    </div>
+    <div>
+      <label>MINUTES</label>
+      <input style="width:80px; font-size:50px;" id="prepMM" type="number" onchange="calcTabataTime()" name="MM" min="0"
+        max="59" value="0">
+    </div>
+    <div>
+      <label>SECONDS</label>
+      <input style="width:80px; font-size:50px;" id="prepSS" type="number" onchange="calcTabataTime()" name="SS" min="0"
+        max="59" value="2">
+    </div>
+  </div>
+
+  <div id="workTime">
+    <h2>WORK TIME</h2>
+    <div>
+      <label>HOURS</label>
+      <input style="width:80px; font-size:50px;" id="workHH" type="number" onchange="calcTabataTime()" name="HH" min="0"
+        max="24" value="0">
+    </div>
+    <div>
+      <label>MINUTES</label>
+      <input style="width:80px; font-size:50px;" id="workMM" type="number" onchange="calcTabataTime()" name="MM" min="0"
+        max="59" value="0">
+    </div>
+    <div>
+      <label>SECONDS</label>
+      <input style="width:80px; font-size:50px;" id="workSS" type="number" onchange="calcTabataTime()" name="SS" min="0"
+        max="59" value="2">
+    </div>
+  </div>
+
+  <div id="restTime">
+    <h2>REST TIME</h2>
+    <div>
+      <label>HOURS</label>
+      <input style="width:80px; font-size:50px;" id="restHH" type="number" onchange="calcTabataTime()" name="HH" min="0"
+        max="24" value="0">
+    </div>
+    <div>
+      <label>MINUTES</label>
+      <input style="width:80px; font-size:50px;" id="restMM" type="number" onchange="calcTabataTime()" name="MM" min="0"
+        max="59" value="0">
+    </div>
+    <div>
+      <label>SECONDS</label>
+      <input style="width:80px; font-size:50px;" id="restSS" type="number" onchange="calcTabataTime()" name="SS" min="0"
+        max="59" value="2">
+    </div>
+  </div>
+
+
+  <div id="roundsIn">
+    <h2>ROUNDS</h2>
+    <input style="width:80px; font-size:50px;" id="roundsInText" type="number" onchange="calcTabataTime()" min="1"
+      max="99" value="2">
+  </div>
+
+  <div id="tabatasIn">
+    <h2>SETS</h2>
+    <input style="width:80px; font-size:50px;" id="tabatasInText" type="number" onchange="calcTabataTime()" min="1"
+      max="99" value="2">
+  </div>
+
+  <div class="base-timer" id="base-timer-Id">
+    <span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span>
+    <span id="base-timer-label2" class="base-timer__label2">${formatTime(timeInc)}</span>
+  </div>
+
+
+  <div id="roundsOut">
+    <h2 style="margin-bottom:-20px;">ROUNDS</h2>
+    <span class="roundsOut">${rounds}</span>
+  </div>
+
+  <div id="tabatasOut">
+    <h2 style="margin-bottom:-20px;">SETS</h2>
+    <span class="tabatasOut">${tabatas}</span>
+  </div>
+
+
+  <div id="startTabataButton">
+    <button type="button" class="button" onclick="startTabataButton()">START TRAINING</button>
+  </div>
+  <div id="stopTabataButton">
+    <button type="button" class="button" onclick="stopTabataButton()">STOP TRAINING</button>
+  </div>
+
+  <div id="startStopwatchButton">
+    <button type="button" class="button" onclick="startStopwatchButton()">START STOPWATCH</button>
+  </div>
+  <div id="stopStopwatchButton">
+    <button type="button" class="button" onclick="stopStopwatchButton()">STOP STOPWATCH</button>
+  </div>
+
+  <div id="soundButton">
+    <button type="button" id="soundOnOff" class="button" onclick="soundButton()">SOUND ON/OFF</button>
+  </div>
+
+  <div id="datum">
+    <span id="datum"></span>
+  </div>
+
+</body>
+
+<script>
+  calcTabataTime();
+</script>
+
+</html>
